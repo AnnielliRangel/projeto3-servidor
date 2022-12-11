@@ -34,7 +34,7 @@ const userSchema = new Schema(
     services: [{ type: Schema.Types.ObjectId, ref: "Service" }],
     passwordHash: { type: String, required: true },
     profilePic: { type: String },
-    confirmEmail: { type: Boolean, default: false },
+    confirmEmail: { type: Boolean, default: true },
   },
   {
     timestamps: true,
