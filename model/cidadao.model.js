@@ -33,11 +33,6 @@ const cidadaoSchema = new Schema(
       default:
         'https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png',
     },
-    profilePic: {
-      type: String,
-      default:
-        "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png",
-    },
     noLocal: { type: Boolean, default: false },
 
     status: {
