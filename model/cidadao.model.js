@@ -7,24 +7,58 @@ const cidadaoSchema = new Schema(
       required: true,
       trim: true,
       minLength: 2,
-      maxLength: 20,
+      maxLength: 40,
       lowercase: true,
     },
-
     numDoc: {
       type: String,
       required: true,
       trim: true,
       minLength: 5,
-
       lowercase: true,
     },
+    tipoDoc: {
+      type: String,
+      enum: ["cpf", "rg","cnh","oab","ctps", "cam","passaporte","te","outro"],
+      default: '',
+    },
 
+    emissor: {
+      type: String,
+      enum: ["SSP", "DIC","DNT","SEPC", "FAB","EB","TSE","PF"],
+      default: "SSP",
+    },
     dataNasc: { type: String, default: '' },
-
     acessibilidade: { type: String, default: 'nenhuma' },
 
+    // acessibilidade: {
+    //   type: String,
+    //   enum: ["Atudinal", "Cultural","Arquitetônica", "Comunicacional", "Instrumental", "Metodológica", "Programática", "Digital", "Natural", "Nenhuma"],
+    //   default: "Nenhuma",
+    // },
+
     genero: { type: String },
+
+    // genero: {
+    //     type: String,
+    //     enum: ["MASCULINO","FEMININO","TRANSGENERO", "AGENERO", "LGBTQIA+","NÃO INFORMADO","OUTRO"],
+    //   },
+
+    age: {
+      type: Number,
+      min: 16,
+      max: 100,
+    },
+    email: {
+      type: String,
+      unique: true,
+      trim: true, // retira os espaços do e-mail
+      lowercase: true,
+      match: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/gm,
+    },
+    phone: {
+      type: String,
+    },
 
     profissao: {},
 
