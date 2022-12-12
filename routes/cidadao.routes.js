@@ -2,10 +2,7 @@ import express from "express";
 //import TaskModel from '../model/task.model.js';
 
 import isAuth from "../middlewares/isAuth.js";
-import attachCurrentUser from "../middlewares/attachCurrentUser.js";
-import isAdmin from "../middlewares/isAdmin.js";
-//
-// !------------------
+
 import CidadaoModel from "../model/cidadao.model.js";
 const cidadaoRoute = express.Router();
 //
@@ -13,7 +10,6 @@ const cidadaoRoute = express.Router();
 //
 cidadaoRoute.get("/all-cidadaos", isAuth, async (req, res) => {
   try {
-    // ? const noLocal = 'noLocal';
     const filter = {};
     const projection = { createdAt: 0 };
     const sort = {
@@ -21,6 +17,7 @@ cidadaoRoute.get("/all-cidadaos", isAuth, async (req, res) => {
     };
 
     const cidadaos = await CidadaoModel.find({
+      filter,
       projection,
       sort,
     }).populate("acessos");
