@@ -33,7 +33,11 @@ const cidadaoSchema = new Schema(
       default:
         "https://images.freeimages.com/clg/images/40/408717/buddy-icon-symbol-clip-art_p.jpg",
     },
-
+    profilePic: {
+      type: String,
+      default:
+        "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png",
+    },
     noLocal: { type: Boolean, default: false },
 
     status: {
@@ -44,12 +48,7 @@ const cidadaoSchema = new Schema(
 
     acessos: [{ type: Schema.Types.ObjectId, ref: "Registro" }],
   },
-  profilePic: {
-    type: String,
-    default:
-      "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
-  },
-  
+
   {
     timestamps: true,
   },
