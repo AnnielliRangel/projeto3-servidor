@@ -44,6 +44,12 @@ const cidadaoSchema = new Schema(
 
     acessos: [{ type: Schema.Types.ObjectId, ref: "Registro" }],
   },
+  profilePic: {
+    type: String,
+    default:
+      "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
+  },
+  
   {
     timestamps: true,
   },

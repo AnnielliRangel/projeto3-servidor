@@ -33,7 +33,11 @@ const userSchema = new Schema(
     },
     services: [{ type: Schema.Types.ObjectId, ref: "Service" }],
     passwordHash: { type: String, required: true },
-    profilePic: { type: String },
+    profilePic: {
+      type: String,
+      default:
+        "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png",
+    },
     confirmEmail: { type: Boolean, default: true },
   },
   {
