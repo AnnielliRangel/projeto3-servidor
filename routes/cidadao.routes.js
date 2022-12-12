@@ -45,11 +45,11 @@ cidadaoRoute.post("/create-cidadao/", async (req, res) => {
 //
 //
 // //
-cidadaoRoute.get("/oneCidadao/:cidadaoId", isAuth, async (req, res) => {
+cidadaoRoute.get("/oneCidadao/:cidadaoID", isAuth, async (req, res) => {
   try {
-    const { cidadaoId } = req.params;
+    const { cidadaoID } = req.params;
 
-    const cidadao = await CidadaoModel.findById(cidadaoId);
+    const cidadao = await CidadaoModel.findOne({ _id: cidadaoID});
 
     return res.status(200).json(cidadao);
   } catch (error) {
@@ -88,24 +88,6 @@ cidadaoRoute.delete("/delete/:id", isAuth, async (req, res) => {
     }
 
     return res.status(200).json(deletedUser);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json(error.errors);
-  }
-});
-
-cidadaoRoute.get("/oneCidadao/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    // const user = await UserModel.find({_id: id})
-    const cidadao = await CidadaoModel.findById(id);
-
-    if (!cidadao) {
-      return res.status(400).json({ msg: "Cidadão não encontrado!" });
-    }
-
-    return res.status(200).json(cidadao);
   } catch (error) {
     console.log(error);
     return res.status(500).json(error.errors);
