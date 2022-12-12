@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 const cidadaoSchema = new Schema(
   {
@@ -20,18 +20,18 @@ const cidadaoSchema = new Schema(
       lowercase: true,
     },
 
-    dataNasc: { type: String, default: "" },
+    dataNasc: { type: String, default: '' },
 
-    acessibilidade: { type: String, default: "nenhuma" },
+    acessibilidade: { type: String, default: 'nenhuma' },
 
     genero: { type: String },
 
     profissao: {},
 
-    img: {
+    profilePic: {
       type: String,
       default:
-        "https://images.freeimages.com/clg/images/40/408717/buddy-icon-symbol-clip-art_p.jpg",
+        'https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png',
     },
     profilePic: {
       type: String,
@@ -42,18 +42,18 @@ const cidadaoSchema = new Schema(
 
     status: {
       type: String,
-      enum: ["aguardando", "atendimento", "finalizado"],
-      default: "aguardando",
+      enum: ['aguardando', 'atendimento', 'finalizado'],
+      default: 'aguardando',
     },
 
-    acessos: [{ type: Schema.Types.ObjectId, ref: "Registro" }],
+    acessos: [{ type: Schema.Types.ObjectId, ref: 'Registro' }],
   },
 
   {
     timestamps: true,
-  },
+  }
 );
 
-const CidadaoModel = model("Cidadao", cidadaoSchema);
+const CidadaoModel = model('Cidadao', cidadaoSchema);
 
 export default CidadaoModel;
