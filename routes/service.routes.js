@@ -129,7 +129,7 @@ serviceRoute.delete(
 );
 
 serviceRoute.put(
-  "/complete/:idService",
+  "/discontinued/:idService",
   isAuth,
   attachCurrentUser,
   async (req, res) => {
@@ -138,7 +138,7 @@ serviceRoute.put(
 
       const service = await ServiceModel.findByIdAndUpdate(
         idService,
-        { complete: true, dateFin: Date.now() },
+        { discontinued: true, dateFin: Date.now() },
         { new: true, runValidators: true },
       );
 
