@@ -13,19 +13,20 @@ registroRoute.post("/create-registro/:idCidadao", isAuth, async (req, res) => {
     const { idCidadao } = req.params;
     //
     // protocolo
-    const Protocolo = await RegistroModel.find({});
-    const comprimento = Protocolo.length;
+    const protocolo = await RegistroModel.find({});
+    console.log(protocolo)
+    const comprimento = protocolo.length;
     let numProtocolo = 0;
 
     if (comprimento >= 1) {
       numProtocolo =
-        Math.max(comprimento, Protocolo[comprimento - 1].protocolo) + 1;
+        Math.max(comprimento, protocolo[comprimento - 1].protocolo) + 1;
     }
 
     //
 
-    console.log(Protocolo[comprimento - 1].protocolo);
-    console.log(numProtocolo, "<-- protocolo");
+    //console.log(protocolo[comprimento - 1].protocolo);
+    //console.log(numProtocolo, "<-- protocolo");
     //hora de entrada, local , serviço, obs no req, inclui id do cidadao
     const newRegistro = await RegistroModel.create({
       ...req.body,
