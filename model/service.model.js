@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const serviceSchema = new Schema(
   {
-    details: { type: String, unique: true, required: true, trim: true },
+    details: { type: String, unique: true, required: true, trim: true, lowercase: true},
     discontinued: { type: Boolean, default: false },
     dateFin: { type: Date },
 
@@ -18,7 +18,6 @@ const serviceSchema = new Schema(
     // Incluído para vincular o serviço ao setor
     localSetor: { type: String,
       required: true,
-      unique: true,
       trim: true,
       minLength: 2,
       maxLength: 40,
