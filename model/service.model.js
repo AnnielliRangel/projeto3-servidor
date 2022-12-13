@@ -9,8 +9,8 @@ const serviceSchema = new Schema(
     collab: [{ type: Schema.Types.ObjectId, ref: "User" }],
     status: {
       type: String,
-      enum: ["Atendimento", "Andamento", "Pendente", "Finalizado", "Suspenso"],
-      default: "Atendimento",
+      enum: ["Disponivel", "Descontinuado", "Em Aprovação", "Suspenso"],
+      default: "Disponivel",
     },
   },
   { timestamps: true },
