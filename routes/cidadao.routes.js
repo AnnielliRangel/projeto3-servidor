@@ -49,7 +49,11 @@ cidadaoRoute.get("/oneCidadao/:cidadaoID", isAuth, async (req, res) => {
   try {
     const { cidadaoID } = req.params;
 
-    const cidadao = await CidadaoModel.findOne({ _id: cidadaoID});
+    const cidadao = await CidadaoModel.findOne({ _id: cidadaoID}).populate("acessos")
+
+    if (!cidadao) {
+      return res.status(400).json({ msg: "Cidadão não encontrado!" });
+    }
 
     return res.status(200).json(cidadao);
   } catch (error) {
