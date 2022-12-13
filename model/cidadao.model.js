@@ -66,3 +66,7 @@ const cidadaoSchema = new Schema(
     timestamps: true,
   },
 );
+
+const CidadaoModel = model("Cidadao", cidadaoSchema);
+
+export default CidadaoModel;
