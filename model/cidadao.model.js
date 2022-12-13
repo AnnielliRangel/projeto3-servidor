@@ -19,17 +19,6 @@ const cidadaoSchema = new Schema(
     },
     tipoDoc: {
       type: String,
-      enum: [
-        "cpf",
-        "rg",
-        "cnh",
-        "oab",
-        "ctps",
-        "cam",
-        "passaporte",
-        "te",
-        "outro",
-      ],
       default: "",
     },
 
@@ -55,18 +44,6 @@ const cidadaoSchema = new Schema(
       min: 16,
       max: 100,
     },
-    email: {
-      type: String,
-      unique: true,
-      trim: true, // retira os espaços do e-mail
-      lowercase: true,
-      match: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/gm,
-    },
-    phone: {
-      type: String,
-    },
-
-    profissao: {},
 
     profilePic: {
       type: String,
