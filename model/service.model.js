@@ -4,7 +4,7 @@ const serviceSchema = new Schema(
   {
     details: { type: String, unique: true, required: true, trim: true, lowercase: true},
     discontinued: { type: Boolean, default: false },
-    dateFin: { type: Date },
+    dateFin: { type: Date, default: Date.now },
 
     user: { type: Schema.Types.ObjectId, ref: "User" },
     collab: [{ type: Schema.Types.ObjectId, ref: "User" }],
@@ -23,7 +23,7 @@ const serviceSchema = new Schema(
       maxLength: 40,
       lowercase: true,
     },
-    unidade: {type: Number, unique: true},
+    unidade: {type: Number},
   },
   { timestamps: true },
 );
