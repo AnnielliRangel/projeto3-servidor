@@ -16,18 +16,39 @@ Dada a necessidade de controle aos prédios públicos e seus serviços, assim co
 
 O objetivo deste módulo foi demonstrar o uso do CRUD aprendido em aula no módulo 2, assim como o uso do REACT.
 
-Servidor / Banco de dados - Back do front em: <colocar endereço aqui>
-Do template base
-get('/all-cidadaos')
-get('/oneCidadao/:cidadaoId')
-get('/oneCidadao/:cidadaoId')
-post('/create-registro/:idCidadao')
-put('/saida/:idCidadao')
-put('/status/:idCidadao')
-consumo das APIs de cidadao
-consumo das APIs de serviço
-Getting Started with Create React App
-This project was bootstrapped with Create React App.
+#Servidor / Banco de dados - Back do front em:
+
+## Do template base
+
+# A base do USER é o template
+
+# rotas:
+
+# get('/all-cidadaos')
+
+### Retorna todos os cidadaos, com oseus registros de acesso/atencimento
+
+##
+
+## get('/oneCidadao/:cidadaoId')
+
+## Retorna somente um cidadão pelo Id, enviar o \_id do cidadão
+
+# post('/create-registro/:idCidadao')
+
+## cria novo evento de pedido de serviço do cidadão, no status inicial de "aguardando", enviando na req um objeto com o dia + hora no formato string.
+
+## Um número de protocolo é gerado
+
+# put('/status/:idCidadao')
+
+## esta rota altera o status do regisro de serviço:
+
+## aguardando > atendimento > finalizado
+
+## Getting Started with Create React App
+
+## This project was bootstrapped with Create React App.
 
 Available Scripts
 In the project directory, you can run:
@@ -83,4 +104,5 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 npm run build fails to minify
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
 # projeto3-servidor
