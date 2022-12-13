@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model } from "mongoose";
 
 const cidadaoSchema = new Schema(
   {
@@ -19,17 +19,12 @@ const cidadaoSchema = new Schema(
     },
     tipoDoc: {
       type: String,
-      enum: ["cpf", "rg","cnh","oab","ctps", "cam","passaporte","te","outro"],
-      default: '',
+      default: "",
     },
 
-    emissor: {
-      type: String,
-      enum: ["SSP", "DIC","DNT","SEPC", "FAB","EB","TSE","PF"],
-      default: "SSP",
-    },
-    dataNasc: { type: String, default: '' },
-    acessibilidade: { type: String, default: 'nenhuma' },
+    dataNasc: { type: String, default: "" },
+
+    acessibilidade: { type: String, default: "nenhuma" },
 
     // acessibilidade: {
     //   type: String,
@@ -49,40 +44,25 @@ const cidadaoSchema = new Schema(
       min: 16,
       max: 100,
     },
-    email: {
-      type: String,
-      unique: true,
-      trim: true, // retira os espaços do e-mail
-      lowercase: true,
-      match: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/gm,
-    },
-    phone: {
-      type: String,
-    },
-
-    profissao: {},
 
     profilePic: {
       type: String,
       default:
-        'https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png',
+        "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png",
     },
+    
     noLocal: { type: Boolean, default: false },
 
     status: {
       type: String,
-      enum: ['aguardando', 'atendimento', 'finalizado'],
-      default: 'aguardando',
+      enum: ["aguardando", "atendimento", "finalizado"],
+      default: "aguardando",
     },
 
-    acessos: [{ type: Schema.Types.ObjectId, ref: 'Registro' }],
+    acessos: [{ type: Schema.Types.ObjectId, ref: "Registro" }],
   },
 
   {
     timestamps: true,
-  }
+  },
 );
-
-const CidadaoModel = model('Cidadao', cidadaoSchema);
-
-export default CidadaoModel;
