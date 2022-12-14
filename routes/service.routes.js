@@ -51,7 +51,7 @@ serviceRoute.get(
   async (req, res) => {
     try {
       const allServices = await ServiceModel.find({
-        user: req.currentUser._id,
+        // user: req.currentUser._id,
       }).populate("user");
 
       return res.status(200).json(allServices);
