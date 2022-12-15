@@ -32,7 +32,7 @@ serviceRoute.post(
       await LogModel.create({
         user: req.currentUser._id,
         service: newService._id,
-        status: "A new service's created",
+        status: "Um novo serviço foi criado!",
       });
 
       return res.status(201).json(newService);
@@ -80,7 +80,7 @@ serviceRoute.put(
       await LogModel.create({
         user: req.currentUser._id,
         service: idService,
-        status: `The service "${updatedService.details}" it's updated!`,
+        status: `O serviço "${updatedService.details}" foi atualizado!`,
       });
 
       return res.status(200).json(updatedService);
@@ -117,7 +117,7 @@ serviceRoute.delete(
       await LogModel.create({
         service: idService,
         user: req.currentUser._id,
-        status: `The service "${deletedService.details}" was trush with the status ${deletedService.status}.`,
+        status: `O Serviço "${deletedService.details}" foi excluído com o status ${deletedService.status}.`,
       });
 
       return res.status(200).json(deletedService);
@@ -145,7 +145,7 @@ serviceRoute.put(
       await LogModel.create({
         user: req.currentUser._id,
         service: idService,
-        status: `The service "${service.details}" was finished!!`,
+        status: `O serviço "${service.details}" foi descontinuado!`,
       });
 
       return res.status(200).json(service);
