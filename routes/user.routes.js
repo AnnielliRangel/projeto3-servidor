@@ -196,6 +196,18 @@ userRoute.put("/edit", isAuth, attachCurrentUser, async (req, res) => {
     return res.status(500).json(error.errors);
   }
 });
+userRoute.put("/edit/:id", isAuth, attachCurrentUser, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const updatedUser = await UserModel.findByIdAndUpdate(id);
+
+    return res.status(200).json(updatedUser);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error.errors);
+  }
+});
 
 userRoute.delete("/delete", isAuth, attachCurrentUser, async (req, res) => {
   try {
@@ -207,6 +219,21 @@ userRoute.delete("/delete", isAuth, attachCurrentUser, async (req, res) => {
 
     //deletar TODAS as tarefas que o usuário é dono
     await ServiceModel.deleteMany({ user: req.currentUser._id });
+
+    return res.status(200).json(users);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error.errors);
+  }
+});
+userRoute.delete("/delete/:id", isAuth, attachCurrentUser, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedUser = await UserModel.findByIdAndDelete(id);
+
+    if (!deletedUser) {
+      return res.status(400).json({ msg: "Usuário não encontrado!" });
+    }
 
     return res.status(200).json(users);
   } catch (error) {
