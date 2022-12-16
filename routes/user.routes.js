@@ -1,4 +1,4 @@
-import express from "express";
+import express, { application } from "express";
 import ServiceModel from "../model/service.model.js";
 import UserModel from "../model/user.model.js";
 import bcrypt from "bcrypt";
@@ -14,9 +14,9 @@ const saltRounds = 10;
 
 //credenciais do meu email
 const transporter = nodemailer.createTransport({
-  service: "Hotmail",
+  service: "Gmail",
   auth: {
-    secure: false,
+    secure: true,
     user: process.env.EMAIL,
     pass: process.env.EMAIL_PASS,
   },
@@ -26,13 +26,19 @@ const transporter = nodemailer.createTransport({
 userRoute.post("/sign-up", async (req, res) => {
   try {
     //capturand a senha do meu req.body
-    const { password } = req.body;
+    const { password, email } = req.body;
+
+    const userFind = await UserModel.findOne({ email })
+
+    if (userFind) {
+      return res.status(401).json({msg: "Email ja existe na base"});
+    }
 
     //checando se a senha EXISTE || se a senha passou nos pré requisitos
     if (
       !password ||
       !password.match(
-        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#!])[0-9a-zA-Z$*&@#!]{8,}$/,
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#!])[0-9a-zA-Z$*&@#!]{8,}$/
       )
     ) {
       return res
@@ -57,7 +63,7 @@ userRoute.post("/sign-up", async (req, res) => {
 
     //configuro o corpo do email
     const mailOptions = {
-      from: "turma92wd@hotmail.com", //nosso email
+      from: "brunoasprestes@gmail.com", //nosso email
       to: email, //o email do usuário
       subject: "Ativação de Conta",
       html: `
@@ -73,7 +79,7 @@ userRoute.post("/sign-up", async (req, res) => {
     return res.status(201).json(newUser);
   } catch (error) {
     console.log(error);
-    return res.status(500).json(error.errors);
+    return res.status(400).json(error);
   }
 });
 
@@ -177,7 +183,7 @@ userRoute.get(
       console.log(error);
       return res.status(500).json(error.errors);
     }
-  },
+  }
 );
 
 userRoute.put("/edit/:id", isAuth, async (req, res) => {
@@ -188,7 +194,7 @@ userRoute.put("/edit/:id", isAuth, async (req, res) => {
       id,
       { ...req.body },
       { new: true, runValidators: true }
-      );
+    );
 
     return res.status(200).json(updatedUser);
   } catch (error) {
@@ -197,40 +203,51 @@ userRoute.put("/edit/:id", isAuth, async (req, res) => {
   }
 });
 
-userRoute.delete("/delete-self", isAuth, attachCurrentUser, async (req, res) => {
-  try {
-    const deleteSelfUser = await UserModel.findByIdAndDelete(req.currentUser._id);
+userRoute.delete(
+  "/delete-self",
+  isAuth,
+  attachCurrentUser,
+  async (req, res) => {
+    try {
+      const deleteSelfUser = await UserModel.findByIdAndDelete(
+        req.currentUser._id
+      );
 
-    if (!deleteSelfUser) {
-      return res.status(400).json({ msg: "Usuário não encontrado!" });
+      if (!deleteSelfUser) {
+        return res.status(400).json({ msg: "Usuário não encontrado!" });
+      }
+
+      //deletar TODAS as tarefas que o usuário é dono
+      await ServiceModel.deleteMany({ user: req.currentUser._id });
+
+      return res.status(200).json(users);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json(error.errors);
     }
-
-    //deletar TODAS as tarefas que o usuário é dono
-    await ServiceModel.deleteMany({ user: req.currentUser._id });
-
-    return res.status(200).json(users);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json(error.errors);
   }
-});
+);
 
-userRoute.delete("/delete/:userId", isAuth, attachCurrentUser, async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const deleteUser = await UserModel.findByIdAndDelete(userId);
+userRoute.delete(
+  "/delete/:userId",
+  isAuth,
+  attachCurrentUser,
+  async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const deleteUser = await UserModel.findByIdAndDelete(userId);
 
+      if (!deleteUser) {
+        return res.status(400).json({ msg: "Usuário não encontrado!" });
+      }
 
-    if (!deleteUser) {
-      return res.status(400).json({ msg: "Usuário não encontrado!" });
+      return res.status(200).json(deleteUser);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json(error.errors);
     }
-
-    return res.status(200).json(deleteUser);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json(error.errors);
   }
-});
+);
 
 //GET ONE USER
 userRoute.get("/oneUser/:id", async (req, res) => {
