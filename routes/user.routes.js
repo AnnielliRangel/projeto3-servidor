@@ -180,27 +180,15 @@ userRoute.get(
   },
 );
 
-userRoute.put("/edit", isAuth, attachCurrentUser, async (req, res) => {
-  try {
-    //quem é o usuário? -> req.currentUser
-
-    const updatedUser = await UserModel.findByIdAndUpdate(
-      req.currentUser._id,
-      { ...req.body },
-      { new: true, runValidators: true },
-    );
-
-    return res.status(200).json(updatedUser);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json(error.errors);
-  }
-});
-userRoute.put("/edit/:id", isAuth, attachCurrentUser, async (req, res) => {
+userRoute.put("/edit/:id", isAuth, async (req, res) => {
   try {
     const { id } = req.params;
 
-    const updatedUser = await UserModel.findByIdAndUpdate(id);
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      id,
+      { ...req.body },
+      { new: true, runValidators: true }
+      );
 
     return res.status(200).json(updatedUser);
   } catch (error) {
@@ -226,49 +214,23 @@ userRoute.delete("/delete-self", isAuth, attachCurrentUser, async (req, res) => 
     return res.status(500).json(error.errors);
   }
 });
+
 userRoute.delete("/delete/:userId", isAuth, attachCurrentUser, async (req, res) => {
   try {
     const { userId } = req.params;
     const deleteUser = await UserModel.findByIdAndDelete(userId);
 
+
     if (!deleteUser) {
       return res.status(400).json({ msg: "Usuário não encontrado!" });
     }
 
-    return res.status(200).json(users);
+    return res.status(200).json(deleteUser);
   } catch (error) {
     console.log(error);
     return res.status(500).json(error.errors);
   }
 });
-
-/* //CREATE - MONGODB
-userRoute.post("/create-user", async (req, res) => {
-  try {
-    const form = req.body;
-    //quer criar um documento dentro da sua collection -> .create()
-    const newUser = await UserModel.create(form);
-    return res.status(201).json(newUser);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json(error.errors);
-  }
-}); */
-
-//GET ALL USERS
-/* userRoute.get("/all-users", async (req, res) => {
-  try {
-    const users = await UserModel.find({}, { __v: 0, updatedAt: 0 })
-      .sort({
-        age: 1,
-      })
-      .limit(100);
-    return res.status(200).json();
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json(error.errors);
-  }
-}); */
 
 //GET ONE USER
 userRoute.get("/oneUser/:id", async (req, res) => {
