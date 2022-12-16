@@ -9,6 +9,7 @@ uploadRoute.post("/upload", uploadImg.single("picture"), (req, res) => {
 
   //confirmar que a imagem foi carregada corretamente
   if (!req.file) {
+    console.log(req.file);
     return res.status(401).json({ msg: "Upload Fail" });
   }
 
