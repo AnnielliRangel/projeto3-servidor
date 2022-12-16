@@ -209,11 +209,11 @@ userRoute.put("/edit/:id", isAuth, attachCurrentUser, async (req, res) => {
   }
 });
 
-userRoute.delete("/delete", isAuth, attachCurrentUser, async (req, res) => {
+userRoute.delete("/delete-self", isAuth, attachCurrentUser, async (req, res) => {
   try {
-    const deletedUser = await UserModel.findByIdAndDelete(req.currentUser._id);
+    const deleteSelfUser = await UserModel.findByIdAndDelete(req.currentUser._id);
 
-    if (!deletedUser) {
+    if (!deleteSelfUser) {
       return res.status(400).json({ msg: "Usuário não encontrado!" });
     }
 
@@ -226,12 +226,12 @@ userRoute.delete("/delete", isAuth, attachCurrentUser, async (req, res) => {
     return res.status(500).json(error.errors);
   }
 });
-userRoute.delete("/delete/:id", isAuth, attachCurrentUser, async (req, res) => {
+userRoute.delete("/delete/:userId", isAuth, attachCurrentUser, async (req, res) => {
   try {
-    const { id } = req.params;
-    const deletedUser = await UserModel.findByIdAndDelete(id);
+    const { userId } = req.params;
+    const deleteUser = await UserModel.findByIdAndDelete(userId);
 
-    if (!deletedUser) {
+    if (!deleteUser) {
       return res.status(400).json({ msg: "Usuário não encontrado!" });
     }
 
