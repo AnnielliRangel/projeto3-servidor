@@ -26,7 +26,7 @@ const transporter = nodemailer.createTransport({
 userRoute.post("/sign-up", async (req, res) => {
   try {
     //capturand a senha do meu req.body
-    const { password, email } = req.body;
+    const { password } = req.body;
 
     //checando se a senha EXISTE || se a senha passou nos pré requisitos
     if (
